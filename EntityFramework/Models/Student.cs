@@ -6,7 +6,7 @@ namespace EntityFramework.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("HR.Student")]
+    [Table("Student")]
     public partial class Student
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -35,12 +35,10 @@ namespace EntityFramework.Models
 
         public int? St_super { get; set; }
 
-        public string photo { get; set; }
+        public virtual Department Department { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stud_Course> Stud_Course { get; set; }
-
-        public virtual Department Department { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Student1 { get; set; }

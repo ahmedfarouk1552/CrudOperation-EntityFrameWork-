@@ -6,14 +6,14 @@ namespace EntityFramework.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("HR.Instructor")]
+    [Table("Instructor")]
     public partial class Instructor
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Instructor()
         {
-            Ins_Course = new HashSet<Ins_Course>();
             Departments = new HashSet<Department>();
+            Ins_Course = new HashSet<Ins_Course>();
         }
 
         [Key]
@@ -31,14 +31,12 @@ namespace EntityFramework.Models
 
         public int? Dept_Id { get; set; }
 
-        public string photo { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ins_Course> Ins_Course { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Departments { get; set; }
 
         public virtual Department Department { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ins_Course> Ins_Course { get; set; }
     }
 }

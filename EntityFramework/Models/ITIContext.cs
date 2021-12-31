@@ -8,18 +8,18 @@ namespace EntityFramework.Models
     public partial class ITIContext : DbContext
     {
         public ITIContext()
-            : base("name=ITIContext")
+            : base("name=ITIContext1")
         {
         }
 
         public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Ins_Course> Ins_Course { get; set; }
+        public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<Stud_Course> Stud_Course { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
-        public virtual DbSet<Instructor> Instructors { get; set; }
-        public virtual DbSet<Student> Students { get; set; }
-        public virtual DbSet<Department> Departments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -33,19 +33,24 @@ namespace EntityFramework.Models
                 .WithRequired(e => e.Course)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Department>()
+                .HasMany(e => e.Instructors)
+                .WithOptional(e => e.Department)
+                .HasForeignKey(e => e.Dept_Id);
+
             modelBuilder.Entity<Instructor>()
                 .Property(e => e.Salary)
                 .HasPrecision(19, 4);
 
             modelBuilder.Entity<Instructor>()
-                .HasMany(e => e.Ins_Course)
-                .WithRequired(e => e.Instructor)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Instructor>()
                 .HasMany(e => e.Departments)
                 .WithOptional(e => e.Instructor)
                 .HasForeignKey(e => e.Dept_Manager);
+
+            modelBuilder.Entity<Instructor>()
+                .HasMany(e => e.Ins_Course)
+                .WithRequired(e => e.Instructor)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Student>()
                 .Property(e => e.St_Lname)
@@ -60,11 +65,6 @@ namespace EntityFramework.Models
                 .HasMany(e => e.Student1)
                 .WithOptional(e => e.Student2)
                 .HasForeignKey(e => e.St_super);
-
-            modelBuilder.Entity<Department>()
-                .HasMany(e => e.Instructors)
-                .WithOptional(e => e.Department)
-                .HasForeignKey(e => e.Dept_Id);
         }
     }
 }
